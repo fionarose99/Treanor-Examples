@@ -48,6 +48,7 @@ public class CatScript : MonoBehaviour
 		//I added a collider), and when it hits that collider it will destroy the camera and
 		//break the game.
 		Destroy(other.gameObject);
+
 		gameLabelText.text = "Cat Loves YOU!!!";
 	}
 }
