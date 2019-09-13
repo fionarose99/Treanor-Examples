@@ -1,6 +1,6 @@
 # CSC 470 - Game Programming - Unity Basics
 
-Below is a list of topics that are demonstrated in the two example scenes (CatMovesTowardTree.unity and CorgiHotDogChase.unity). Download and import the Basics.unitypackage, and inspect the project to make sure you understand everything. Come to class with questions!
+Below is a list of topics that are demonstrated in the two example scenes (CatMovesTowardTree.unity and CorgiHotDogChase.unity). Download and import the [Basics.unitypackage](https://github.com/mtreanor/csc470-fall2019/blob/master/Basics/Basics.unitypackage), and inspect the project to make sure you understand everything. Come to class with questions!
 
 * Creating and modfying 3d primitive shapes in the Unity Editor
 * Creating and then applying materials to Game Objects
