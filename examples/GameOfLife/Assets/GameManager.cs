@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
 	public CellScript[,] grid;
 
+	public GameObject cellPrefab;
+
 	bool simulate = false;
 
 	int gridWidth = 10;
@@ -31,15 +33,16 @@ public class GameManager : MonoBehaviour
 		for (int x = 0; x < gridWidth; x++) {
 			for (int y = 0; y < gridHeight; y++) {
 				//Create a cube, position/scale it, add the CellScript to it.
-				GameObject cellObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+				Vector3 pos = new Vector3(x * (cellDimension + cellSpacing),
+											0,
+											y * (cellDimension + cellSpacing));
+				GameObject cellObj = Instantiate(cellPrefab, pos, Quaternion.identity);
 				CellScript cs = cellObj.AddComponent<CellScript>();
 				cs.x = x;
 				cs.y = y;
 				cs.alive = (Random.value > 0.5f) ? true : false;
 				cs.updateColor();
-				Vector3 pos = new Vector3(x * (cellDimension + cellSpacing),
-											0,
-											y * (cellDimension + cellSpacing));
+
 				cellObj.transform.position = pos;
 				cellObj.transform.localScale = new Vector3(cellDimension,
 																cellDimension,
