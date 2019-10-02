@@ -110,8 +110,8 @@ public class GameManager : MonoBehaviour
 		List<CellScript> neighbors = new List<CellScript>();
 		//Spend some time thinking about how this considers all surrounding cells in grid[x,y]
 		//why now indexing bad values of grid.
-		for (int i = Mathf.Max(0, x - 1); i < Mathf.Min(gridWidth - 1, x + 1); i++) {
-			for (int j = Mathf.Max(0, y - 1); j < Mathf.Min(gridHeight - 1, y + 1); j++) {
+		for (int i = Mathf.Max(0, x - 1); i <= Mathf.Min(gridWidth - 1, x + 1); i++) {
+			for (int j = Mathf.Max(0, y - 1); j <= Mathf.Min(gridHeight - 1, y + 1); j++) {
 				//Add all live neighbors of (x, y) excluding itself
 				if (grid[i,j].alive && !(i == x && j == y)) {
 					neighbors.Add(grid[i, j]);
