@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
 											0,
 											y * (cellDimension + cellSpacing));
 				GameObject cellObj = Instantiate(cellPrefab, pos, Quaternion.identity);
-				CellScript cs = cellObj.AddComponent<CellScript>();
+				CellScript cs = cellObj.AddComponent<CellScript>(); 
 				cs.x = x;
 				cs.y = y;
 				cs.alive = (Random.value > 0.5f) ? true : false;

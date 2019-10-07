@@ -31,7 +31,7 @@ public class CellScript : MonoBehaviour
 	public void updateColor()
 	{
 		if (renderer == null) {
-			renderer = gameObject.GetComponent<Renderer>();
+			renderer = gameObject.GetComponentInChildren<Renderer>();
 		}
 
 		if (this.alive) {
