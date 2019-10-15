@@ -7,6 +7,9 @@ public class UnitScript : MonoBehaviour
 	public bool selected = false;
 	bool hover = false;
 
+	public string name;
+	public Sprite portrait;
+
 	Color defautColor;
 	public Color hoverColor;
 	public Color selectedColor;
@@ -40,15 +43,23 @@ public class UnitScript : MonoBehaviour
 		defautColor = rend.material.color;
 		// Set the initial color.
 		setColorOnMouseState();
+
+		// Give them each a random rotation so they're not all facing the same way.
+		transform.eulerAngles = new Vector3(0, Random.Range(0,360), 0);
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
 		if (destination != null && Vector3.Distance(destination, transform.position) > 0.5f) {
-			// If we have a destination, move towards it.
+			// If we have a destination, rotate and move towards it.
+			destination.y = transform.position.y;
 			Vector3 vecToDest = (destination - transform.position).normalized;
-			cc.Move(vecToDest * 5 * Time.deltaTime);
+			float step = 3 * Time.deltaTime;
+			Vector3 newDir = Vector3.RotateTowards(transform.forward, vecToDest, step, 1);
+			transform.rotation = Quaternion.LookRotation(newDir);
+
+			cc.Move(transform.forward * 5 * Time.deltaTime);
 		}
 	}
 
@@ -82,6 +93,8 @@ public class UnitScript : MonoBehaviour
 		selected = !selected;
 		if (selected) {
 			gm.selectUnit(this);
+		} else {
+			gm.selectUnit(null);
 		}
 		setColorOnMouseState();
 	}

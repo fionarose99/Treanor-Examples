@@ -1,14 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
 	// This will hold a reference to whichever Unit was selected last.
 	UnitScript selectedUnit;
 
-    // Start is called before the first frame update
-    void Start()
+
+	public GameObject selectedPanel;
+	public Text nameText;
+	public Image portraitImage;
+
+	// Start is called before the first frame update
+	void Start()
     {
         
     }
@@ -16,8 +23,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		// This is how you detect that the left mouse button has been clicked.
-        if (Input.GetMouseButtonDown(0)) {
+		// Input.GetMouseButtonDown(0) is how you detect that the left mouse button has been clicked.
+		//
+		// The IsPointerOverGameObject makes sure the pointer is over the UI. In this case,
+		// we don't want to register clicks over the UI when determining what unit is 
+		// selected or deselected.
+		if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) {
 			// Create a ray from the mouse position (in camera/ui space) to 3d world space.
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			// After the Raycast, 'hit' will store information about what the raycast hit.
@@ -40,6 +51,8 @@ public class GameManager : MonoBehaviour
 					selectedUnit.selected = false;
 					selectedUnit.setColorOnMouseState();
 					selectedUnit = null;
+
+					updateUI();
 				}
 			}
 		}
@@ -57,5 +70,21 @@ public class GameManager : MonoBehaviour
 		selectedUnit = unit;
 		selectedUnit.selected = true;
 		selectedUnit.setColorOnMouseState();
+
+		updateUI();
+	}
+
+	// This function updates the UI elements based on what was clicked on.
+	void updateUI()
+	{
+		// Only update the UI is there is a unit selected.
+		if (selectedUnit != null) {
+			nameText.text = selectedUnit.name;
+			portraitImage.sprite = selectedUnit.portrait;
+			selectedPanel.SetActive(true);
+		} else {
+			// If there is no selected unit, turn the panel off.
+			selectedPanel.SetActive(false);
+		}
 	}
 }
