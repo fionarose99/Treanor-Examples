@@ -17,6 +17,12 @@ public class GameManager : MonoBehaviour
 	public Text nameText;
 	public Image portraitImage;
 
+	// Set the fillAmount of this Image to a value between 0 and 1 to set the meter.
+	public Image meterFG;
+	// We will move this object around and turn it on and off (done in UnitScript OnMouse function).
+	public GameObject healthMeterObject;
+
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -114,7 +120,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		// This registers a function with Unity's coroutine system (see notes above the function definition)
-		StartCoroutine(displayTalkBoxMessages(new string[] { action, "I'm done talking" }));
+		StartCoroutine(displayTalkBoxMessages(new string[] { action, "I'm done talking", "One more thing...", "Nevermind." }));
 	}
 
 	// This type of function is registered with Unity's coroutine system. It doesn't run like
@@ -124,14 +130,22 @@ public class GameManager : MonoBehaviour
 	// return...". This happens until the end of the function is reached.
 	//
 	// This particular coroutine recieves an array of string messages and displays each
-	// for each seconds.
+	// until the mouse is pressed.
 	IEnumerator displayTalkBoxMessages(string[] messages)
 	{
-		float timePerLine = 2 * messages.Length;
 		talkBox.SetActive(true);
 		for (int i = 0; i < messages.Length; i++) {
 			talkText.text = messages[i];
-			yield return new WaitForSeconds(timePerLine);
+
+			// Wait for the mouse to be pressed
+			while (!Input.GetMouseButtonDown(0)) {
+				// Tell the coroutine system that we are done for this update cycle.
+				yield return null;
+			}
+
+			// If we get here, it means that the mouse was just pressed. Tell the coroutine
+			// system that we are done for this update cycle.
+			yield return null;
 		}
 		talkBox.SetActive(false);
 	}

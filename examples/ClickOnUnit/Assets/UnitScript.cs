@@ -9,6 +9,8 @@ public class UnitScript : MonoBehaviour
 
 	public string name;
 	public Sprite portrait;
+	public float health;
+
 
 	Color defautColor;
 	public Color hoverColor;
@@ -25,6 +27,8 @@ public class UnitScript : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
+		health = Random.Range(40, 100);
+
 		// This isn't the best way to get a reference to the GameManager component, but it
 		// demonstrates a useful pattern where you can 1. get a reference to a gameObject using
 		// GameObject.Find(), and 2. using the GetComponent() function to get a reference to
@@ -82,9 +86,16 @@ public class UnitScript : MonoBehaviour
 	{
 		hover = true;
 		setColorOnMouseState();
+
+		gm.healthMeterObject.SetActive(true);
+		gm.meterFG.fillAmount = health / 100;
+		gm.healthMeterObject.transform.position = Camera.main.WorldToScreenPoint(
+																		transform.position + Vector3.up * 2);
 	}
 	private void OnMouseExit()
 	{
+		gm.healthMeterObject.SetActive(false);
+
 		hover = false;
 		setColorOnMouseState();
 	}
