@@ -19,6 +19,8 @@ public class UnitScript : MonoBehaviour
 	CharacterController cc;
 	public Vector3 destination;
 
+	public Animator animator;
+
 	// NOTE: We set this reference in the prefab editor within the Unity editor.
 	public Renderer rend;
 
@@ -64,6 +66,10 @@ public class UnitScript : MonoBehaviour
 			transform.rotation = Quaternion.LookRotation(newDir);
 
 			cc.Move(transform.forward * 5 * Time.deltaTime);
+
+			animator.SetFloat("speed", 1);
+		} else {
+			animator.SetFloat("speed", 0);
 		}
 	}
 
